@@ -95,7 +95,8 @@ def do_prsync(hosts, local, remote, opts):
             else:
                 cmd.append('%s:%s' % (host, local[0]))
             localpath = "%s/%s" % (remote, host)
-            os.makedirs(localpath)
+            # Without `exist_ok=True`, iterative `--download` is impossible:
+            os.makedirs(localpath, exist_ok=True)
             cmd.append(localpath)
         else:
             cmd.extend(local)
